@@ -2,40 +2,31 @@
 
 namespace App\Entity;
 
-use App\Repository\ServerListRepository;
-use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
-/**
- * @ORM\Entity(repositoryClass=ServerListRepository::class)
- */
 class ServerList
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    // This represents the instance
+    private static $fileName;
+
+    private function __construct() { }
+
+    private function __clone() { }
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @throws Exception
      */
-    private $fileName;
-
-    public function getId(): ?int
-    {
-        return $this->id;
+    public function __wakeup() {
+        throw new Exception("Cannot unserialize a singleton.");
     }
 
-    public function getFileName(): ?string
+    public static function getFileName(): ?string
     {
-        return $this->fileName;
+        return ServerList::$fileName;
     }
 
-    public function setFileName(string $fileName): self
+    public static function setFileName(string $fileName)
     {
-        $this->fileName = $fileName;
-
-        return $this;
+        ServerList::$fileName = $fileName;
     }
 }
