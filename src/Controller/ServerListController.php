@@ -37,13 +37,14 @@ class ServerListController extends AbstractController
                     $this->getParameter('server_list_directory'),
                     $newFilename
                 );
+
+                ServerList::setFileName($newFilename);
+
+                $this->addFlash('success', 'New server list file uploaded!');
+                return $this->redirectToRoute('app_home');
             } catch (FileException $e) {
-                //TODO: handle exception if something happens during file upload
+                $this->addFlash('error', 'An error occurred while uploading new server list file!');
             }
-
-            ServerList::setFileName($newFilename);
-
-            return $this->redirectToRoute('app_home');
         }
 
         return $this->renderForm('server_list/upload.html.twig', [
