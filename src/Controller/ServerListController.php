@@ -41,7 +41,7 @@ class ServerListController extends AbstractController
                 ServerList::setFileName($newFilename);
 
                 $this->addFlash('success', 'New server list file uploaded!');
-                return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('app_server_list_upload');
             } catch (FileException $e) {
                 $this->addFlash('error', 'An error occurred while uploading new server list file!');
             }
