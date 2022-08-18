@@ -28,6 +28,11 @@ class ServerListType extends AbstractType
                         'maxSize' => '1024k',
                         'mimeTypes' => [
                             'application/vnd.ms-excel',
+                            'application/vnd.ms-excel.addin.macroEnabled.12',
+                            'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
+                            'application/vnd.ms-excel.sheet.macroEnabled.12',
+                            'application/vnd.ms-excel.template.macroEnabled.12',
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid MS Excel sheet',
                     ])
@@ -42,7 +47,6 @@ class ServerListType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ServerList::class,
         ]);
     }
 }
