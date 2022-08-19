@@ -20,12 +20,16 @@ class ServerListController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine): Response
     {
+        $latestServerListFileName = null;
         try {
-            $latestServerListFileName = $doctrine->getRepository(ServerList::class)
+            $latestServerList = $doctrine->getRepository(ServerList::class)
                 ->findOneByCreatedAtLatest()
                 ->getFileName();
+            if (!is_null($latestServerList)) {
+                $latestServerListFileName = $latestServerList->getFileName();
+            }
         } catch (NonUniqueResultException $e) {
-            $latestServerListFileName = null;
+            $this->addFlash('error', 'The latest uploaded file cannot be determined.');
         }
 
         return $this->render('server_list/index.html.twig', [
@@ -64,7 +68,7 @@ class ServerListController extends AbstractController
                 $entityManager->getRepository(ServerList::class)->add($serverList);
 
                 $this->addFlash('success', 'New server list file uploaded!');
-                return $this->redirectToRoute('app_server_list_upload');
+                return $this->redirectToRoute('app_server_list');
             } catch (FileException $e) {
                 $this->addFlash('error', 'An error occurred while uploading new server list file!');
             }
