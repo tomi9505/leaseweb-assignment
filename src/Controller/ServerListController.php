@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ServerList;
 use App\Form\ServerListType;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -17,10 +18,18 @@ class ServerListController extends AbstractController
     /**
      * @Route("/server/list", name="app_server_list")
      */
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
+        try {
+            $latestServerListFileName = $doctrine->getRepository(ServerList::class)
+                ->findOneByCreatedAtLatest()
+                ->getFileName();
+        } catch (NonUniqueResultException $e) {
+            $latestServerListFileName = null;
+        }
+
         return $this->render('server_list/index.html.twig', [
-            'fileName' => 'dummy' //TODO query latest file name
+            'fileName' => $latestServerListFileName
         ]);
     }
 
@@ -50,11 +59,9 @@ class ServerListController extends AbstractController
 
                 $serverList->setFileName($newFilename);
 
-                $entityManager = $doctrine->getManager();
-
                 // persist entity in database
-                $entityManager->persist($serverList);
-                $entityManager->flush();
+                $entityManager = $doctrine->getManager();
+                $entityManager->getRepository(ServerList::class)->add($serverList);
 
                 $this->addFlash('success', 'New server list file uploaded!');
                 return $this->redirectToRoute('app_server_list_upload');

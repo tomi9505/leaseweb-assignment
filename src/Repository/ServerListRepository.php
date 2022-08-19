@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ServerList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,18 @@ class ServerListRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @return ServerList Returns the ServerList entity which was created latest
+     */
+    public function findOneByCreatedAtLatest(): ?ServerList
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.createdAt', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**
