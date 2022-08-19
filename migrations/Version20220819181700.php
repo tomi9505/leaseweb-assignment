@@ -14,7 +14,7 @@ final class Version20220819181700 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Added createdAt field to ServerList';
     }
 
     public function up(Schema $schema): void
