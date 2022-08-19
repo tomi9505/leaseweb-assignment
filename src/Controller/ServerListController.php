@@ -23,8 +23,7 @@ class ServerListController extends AbstractController
         $latestServerListFileName = null;
         try {
             $latestServerList = $doctrine->getRepository(ServerList::class)
-                ->findOneByCreatedAtLatest()
-                ->getFileName();
+                ->findOneByCreatedAtLatest();
             if (!is_null($latestServerList)) {
                 $latestServerListFileName = $latestServerList->getFileName();
             }
