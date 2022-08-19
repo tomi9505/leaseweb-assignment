@@ -30,12 +30,12 @@ class ServerItem
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $ram_type;
+    private $ramType;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $hdd_count;
+    private $hddCount;
 
     /**
      * @ORM\Column(type="integer")
@@ -93,24 +93,24 @@ class ServerItem
 
     public function getRamType(): ?string
     {
-        return $this->ram_type;
+        return $this->ramType;
     }
 
     public function setRamType(string $ram_type): self
     {
-        $this->ram_type = $ram_type;
+        $this->ramType = $ram_type;
 
         return $this;
     }
 
     public function getHddCount(): ?int
     {
-        return $this->hdd_count;
+        return $this->hddCount;
     }
 
     public function setHddCount(int $hdd_count): self
     {
-        $this->hdd_count = $hdd_count;
+        $this->hddCount = $hdd_count;
 
         return $this;
     }
