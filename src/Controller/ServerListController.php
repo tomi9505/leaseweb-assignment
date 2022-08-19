@@ -20,7 +20,7 @@ class ServerListController extends AbstractController
     public function index(): Response
     {
         return $this->render('server_list/index.html.twig', [
-            'fileName' => ServerList::getFileName()
+            'fileName' => 'dummy' //TODO query latest file name
         ]);
     }
 
