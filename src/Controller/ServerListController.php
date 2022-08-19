@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ServerList;
 use App\Form\ServerListType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,11 +27,10 @@ class ServerListController extends AbstractController
     /**
      * @Route("/server/list/upload", name="app_server_list_upload")
      */
-    public function upload(Request $request, SluggerInterface $slugger): Response
+    public function upload(Request $request, SluggerInterface $slugger, ManagerRegistry $doctrine): Response
     {
-        //TODO: handle deletion of old file
-
-        $form = $this->createForm(ServerListType::class);
+        $serverList = new ServerList();
+        $form = $this->createForm(ServerListType::class, $serverList);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,7 +48,13 @@ class ServerListController extends AbstractController
                     $newFilename
                 );
 
-                ServerList::setFileName($newFilename);
+                $serverList->setFileName($newFilename);
+
+                $entityManager = $doctrine->getManager();
+
+                // persist entity in database
+                $entityManager->persist($serverList);
+                $entityManager->flush();
 
                 $this->addFlash('success', 'New server list file uploaded!');
                 return $this->redirectToRoute('app_server_list_upload');

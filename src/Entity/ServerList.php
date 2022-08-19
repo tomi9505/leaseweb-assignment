@@ -2,31 +2,62 @@
 
 namespace App\Entity;
 
-use Exception;
+use App\Repository\ServerListRepository;
 
+/**
+ * @ORM\Entity(repositoryClass=ServerListRepository::class)
+ */
 class ServerList
 {
-    // This represents the instance
-    private static $fileName;
-
-    private function __construct() { }
-
-    private function __clone() { }
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
     /**
-     * @throws Exception
+     * @ORM\Column(type="string", length=255)
      */
-    public function __wakeup() {
-        throw new Exception("Cannot unserialize a singleton.");
+    private $fileName;
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
-    public static function getFileName(): ?string
+    public function getFileName(): ?string
     {
-        return ServerList::$fileName;
+        return $this->fileName;
     }
 
-    public static function setFileName(string $fileName)
+    public function setFileName(string $fileName): self
     {
-        ServerList::$fileName = $fileName;
+        $this->fileName = $fileName;
+
+        return $this;
     }
+//    // This represents the instance
+//    private static $fileName;
+//
+//    private function __construct() { }
+//
+//    private function __clone() { }
+//
+//    /**
+//     * @throws Exception
+//     */
+//    public function __wakeup() {
+//        throw new Exception("Cannot unserialize a singleton.");
+//    }
+//
+//    public static function getFileName(): ?string
+//    {
+//        return ServerList::$fileName;
+//    }
+//
+//    public static function setFileName(string $fileName)
+//    {
+//        ServerList::$fileName = $fileName;
+//    }
 }
