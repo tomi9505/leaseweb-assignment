@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Server List</h1>
 
-    {% if fileName %}
+    {% if fileName is null %}
         <p class="fs-5 col-md-8">Currently, the server list file is not set so please upload one.</p>
     {% else %}
         <p class="fs-5 col-md-8">The current server list file is: <code>{{ fileName }}</code>. You can upload a new one to replace it.</p>
