@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ServerListRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ServerListRepository::class)
