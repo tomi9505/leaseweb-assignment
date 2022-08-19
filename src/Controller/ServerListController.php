@@ -64,7 +64,7 @@ class ServerListController extends AbstractController
 
                 // persist entity in database
                 $entityManager = $doctrine->getManager();
-                $entityManager->getRepository(ServerList::class)->add($serverList);
+                $entityManager->getRepository(ServerList::class)->add($serverList, true);
 
                 $this->addFlash('success', 'New server list file uploaded!');
                 return $this->redirectToRoute('app_server_list');
