@@ -14,6 +14,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ServerListController extends AbstractController
 {
     /**
+     * @Route("/server/list", name="app_server_list")
+     */
+    public function index(): Response
+    {
+        return $this->render('server_list/index.html.twig', [
+            'fileName' => ServerList::getFileName()
+        ]);
+    }
+
+    /**
      * @Route("/server/list/upload", name="app_server_list_upload")
      */
     public function upload(Request $request, SluggerInterface $slugger): Response

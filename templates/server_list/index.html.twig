@@ -2,8 +2,15 @@
 
 {% block body %}
     <h1>Server List</h1>
-    <p>
-        Here you can upload a new server list as a data source.
-    </p>
+
+    {% if fileName %}
+        <p class="fs-5 col-md-8">Currently, the server list file is not set so please upload one.</p>
+    {% else %}
+        <p class="fs-5 col-md-8">The current server list file is: <code>{{ fileName }}</code>. You can upload a new one to replace it.</p>
+    {% endif %}
+
+    <div class="mb-5">
+        <a href="{{ path('app_server_list_upload') }}" class="btn btn-primary btn-lg px-4">Upload new server list file</a>
+    </div>
 
 {% endblock %}
