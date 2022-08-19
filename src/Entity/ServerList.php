@@ -22,6 +22,11 @@ class ServerList
      */
     private $fileName;
 
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $createdAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,4 +66,16 @@ class ServerList
 //    {
 //        ServerList::$fileName = $fileName;
 //    }
+
+public function getCreatedAt(): ?\DateTimeImmutable
+{
+    return $this->createdAt;
+}
+
+public function setCreatedAt(\DateTimeImmutable $createdAt): self
+{
+    $this->createdAt = $createdAt;
+
+    return $this;
+}
 }
