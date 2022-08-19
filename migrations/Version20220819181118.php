@@ -14,7 +14,7 @@ final class Version20220819181118 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Initial migration for server list entity';
     }
 
     public function up(Schema $schema): void
