@@ -93,7 +93,7 @@ class ServerListController extends AbstractController
      */
     private function parseUploadedExcel(string $filePath, string $fileName)
     {
-        $spreadsheet = IOFactory::load($filePath . $fileName);
+        $spreadsheet = IOFactory::load($filePath . DIRECTORY_SEPARATOR . $fileName);
         $headerRow = $spreadsheet->getActiveSheet()->removeRow(1);
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
     }
