@@ -49,39 +49,16 @@ class ServerList
 
         return $this;
     }
-//    // This represents the instance
-//    private static $fileName;
-//
-//    private function __construct() { }
-//
-//    private function __clone() { }
-//
-//    /**
-//     * @throws Exception
-//     */
-//    public function __wakeup() {
-//        throw new Exception("Cannot unserialize a singleton.");
-//    }
-//
-//    public static function getFileName(): ?string
-//    {
-//        return ServerList::$fileName;
-//    }
-//
-//    public static function setFileName(string $fileName)
-//    {
-//        ServerList::$fileName = $fileName;
-//    }
 
-public function getCreatedAt(): ?DateTimeImmutable
-{
-    return $this->createdAt;
-}
+    public function getCreatedAt(): ?DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
 
-public function setCreatedAt(DateTimeImmutable $createdAt): self
-{
-    $this->createdAt = $createdAt;
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
-    return $this;
-}
+        return $this;
+    }
 }
