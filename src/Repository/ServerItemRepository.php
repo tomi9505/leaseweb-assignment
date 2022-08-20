@@ -39,6 +39,18 @@ class ServerItemRepository extends ServiceEntityRepository
         }
     }
 
+    public function removeAll(bool $flush = false): void
+    {
+        $this->createQueryBuilder('s')
+            ->delete('App:ServerItem', 'server_item')
+            ->getQuery()
+            ->getResult();
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
 //    /**
 //     * @return ServerItem[] Returns an array of ServerItem objects
 //     */

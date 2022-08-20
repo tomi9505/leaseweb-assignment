@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ServerItem;
 use App\Entity\ServerList;
 use App\Form\ServerListType;
 use Doctrine\ORM\NonUniqueResultException;
@@ -65,6 +66,13 @@ class ServerListController extends AbstractController
                 // persist entity in database
                 $entityManager = $doctrine->getManager();
                 $entityManager->getRepository(ServerList::class)->add($serverList, true);
+
+                // delete all ServerItem entities
+                $entityManager->getRepository(ServerItem::class)->removeAll();
+
+                //TODO parse data from uploaded Excel
+
+                //TODO insert parsed data into server_item table0
 
                 $this->addFlash('success', 'New server list file uploaded!');
                 return $this->redirectToRoute('app_server_list');
