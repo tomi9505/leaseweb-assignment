@@ -6,6 +6,7 @@ use App\Entity\ServerItem;
 use App\Entity\ServerList;
 use App\Form\ServerListType;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -22,10 +23,12 @@ class ServerListController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $latestServerListFileName = null;
-        $latestServerList = $doctrine->getRepository(ServerList::class)
-            ->findOneByCreatedAtLatest();
-        if (!is_null($latestServerList)) {
-            $latestServerListFileName = $latestServerList->getFileName();
+        try {
+            $latestServerListFileName = $doctrine->getRepository(ServerList::class)
+                ->findOneByCreatedAtLatest()
+                ->getFileName();
+        } catch (NoResultException $e) {
+            $this->addFlash('info', 'Currently, the server list file is not set so please upload one.');
         }
 
         return $this->render('server_list/index.html.twig', [

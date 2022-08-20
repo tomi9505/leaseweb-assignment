@@ -44,6 +44,12 @@ See https://symfony.com/doc/current/templates.html#template-inheritance-and-layo
         </div>
     {% endfor %}
 
+    {% for message in app.flashes('info') %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}

@@ -4,8 +4,9 @@ namespace App\Repository;
 
 use App\Entity\ServerList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use function Webmozart\Assert\Tests\StaticAnalysis\length;
 
 /**
  * @extends ServiceEntityRepository<ServerList>
@@ -42,14 +43,20 @@ class ServerListRepository extends ServiceEntityRepository
 
     /**
      * @return ServerList Returns the ServerList entity which was created latest
+     * @throws NoResultException
      */
     public function findOneByCreatedAtLatest(): ?ServerList
     {
-        return $this->createQueryBuilder('s')
+        $foundElementsArray = $this->createQueryBuilder('s')
             ->orderBy('s.createdAt', 'DESC')
             ->getQuery()
             ->setMaxResults(1)
             ->getResult();
+        if (count($foundElementsArray) == 1) {
+            return $foundElementsArray[0];
+        } else {
+            throw new NoResultException('No uploaded file found');
+        }
     }
 
 //    /**
