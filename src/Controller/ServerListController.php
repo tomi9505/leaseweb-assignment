@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Entity\ServerItem;
 use App\Entity\ServerList;
 use App\Form\ServerListType;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpOffice\PhpSpreadsheet\Exception;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,7 +51,7 @@ class ServerListController extends AbstractController
             $originalFilename = pathinfo($serverListFile->getClientOriginalName(), PATHINFO_FILENAME);
             // this is needed to safely include the file name as part of the URL
             $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$serverListFile->guessExtension();
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $serverListFile->guessExtension();
 
             // Move the file to the directory where brochures are stored
             try {
@@ -70,12 +70,13 @@ class ServerListController extends AbstractController
                 $entityManager->getRepository(ServerItem::class)->removeAll();
 
                 //TODO parse data from uploaded Excel
+                $this->parseUploadedExcel($this->getParameter('server_list_directory'), $newFilename);
 
                 //TODO insert parsed data into server_item table0
 
                 $this->addFlash('success', 'New server list file uploaded!');
                 return $this->redirectToRoute('app_server_list');
-            } catch (FileException $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'An error occurred while uploading new server list file!');
             }
         }
@@ -83,5 +84,17 @@ class ServerListController extends AbstractController
         return $this->renderForm('server_list/upload.html.twig', [
             'form' => $form,
         ]);
+    }
+
+
+    /* Helper functions */
+    /**
+     * @throws Exception
+     */
+    private function parseUploadedExcel(string $filePath, string $fileName)
+    {
+        $spreadsheet = IOFactory::load($filePath, $fileName);
+        $headerRow = $spreadsheet->getActiveSheet()->removeRow(1);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
     }
 }
