@@ -24,8 +24,6 @@ See https://symfony.com/doc/current/templates.html#template-inheritance-and-layo
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
-
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 
 <body id="{% block body_id %}{% endblock %}">
@@ -40,14 +38,14 @@ See https://symfony.com/doc/current/templates.html#template-inheritance-and-layo
         {% endblock %}
     </header>
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
             {{ message }}
         </div>
     {% endfor %}
 
-    {% for message in app.flashes('error') %}
-        <div class="alert alert-error">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
             {{ message }}
         </div>
     {% endfor %}
@@ -62,7 +60,7 @@ See https://symfony.com/doc/current/templates.html#template-inheritance-and-layo
             <div class="row">
                 <div id="footer-copyright" class="col-md-6">
                     <p>&copy; {{ 'now'|date('Y') }} - The Symfony Project</p>
-                    <p>{{ 'mit_license'|trans }}</p>
+{#                    <p>{{ 'mit_license'|trans }}</p>#}
                 </div>
                 <div id="footer-resources" class="col-md-6">
                     <p>
