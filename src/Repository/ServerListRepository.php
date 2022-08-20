@@ -41,7 +41,6 @@ class ServerListRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws NonUniqueResultException
      * @return ServerList Returns the ServerList entity which was created latest
      */
     public function findOneByCreatedAtLatest(): ?ServerList
@@ -49,7 +48,8 @@ class ServerListRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->orderBy('s.createdAt', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->setMaxResults(1)
+            ->getResult();
     }
 
 //    /**
