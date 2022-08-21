@@ -62,17 +62,17 @@ class ServerListController extends AbstractController
 
                 $serverList->setFileName($newFilename);
 
-                // persist entity in database
+                // Persist entity in database
                 $entityManager = $doctrine->getManager();
                 $entityManager->getRepository(ServerList::class)->add($serverList, true);
 
-                // delete all ServerItem entities
+                // Delete all ServerItem entities
                 $entityManager->getRepository(ServerItem::class)->removeAll();
 
-                //TODO parse data from uploaded Excel
-                $this->parseUploadedExcel($this->getParameter('server_list_directory'), $newFilename);
+                $this->parseUploadedExcel($doctrine, $this->getParameter('server_list_directory'), $newFilename);
 
-                //TODO insert parsed data into server_item table0
+                // Persist newly created ServerItems in the DB
+                $entityManager->flush();
 
                 $this->addFlash('success', 'New server list file uploaded!');
                 return $this->redirectToRoute('app_server_list');
@@ -91,10 +91,50 @@ class ServerListController extends AbstractController
     /**
      * @throws Exception
      */
-    private function parseUploadedExcel(string $filePath, string $fileName)
+    private function parseUploadedExcel(ManagerRegistry $doctrine, string $filePath, string $fileName)
     {
+        $repository = $doctrine->getManager()->getRepository(ServerItem::class);
+
+        // Open Excel sheet
         $spreadsheet = IOFactory::load($filePath . DIRECTORY_SEPARATOR . $fileName);
-        $headerRow = $spreadsheet->getActiveSheet()->removeRow(1);
+        $spreadsheet->getActiveSheet()->removeRow(1);
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+        // Add each row as a new ServerItem
+        foreach ($sheetData as $row) {
+            $serverItem = new ServerItem();
+            // Model
+            $serverItem->setModel($row['A']);
+            // RAM
+            if (preg_match("^(\d+)GB(.+)$", $row['B'], $matches) && count($matches) == 3) {
+                $serverItem->setRam(intval($matches[1]));
+                $serverItem->setRamType($matches[2]);
+            } else {
+                throw new Exception("An error occurred during parsing the RAM value of '{$row['B']}'");
+            }
+            // HDD
+            if (preg_match("^(\d+)x(\d+)([GT]B)(\D*)\d?$", $row['C'], $matches) && count($matches) == 5) {
+                $hddCapacity = intval($matches[2]);
+                if ($matches[3] == 'TB') {
+                    $hddCapacity = $hddCapacity * 1024;
+                }
+                $serverItem->setHddCount(intval($matches[1]));
+                $serverItem->setHddStorageCapacity($hddCapacity);
+                $serverItem->setHddType($matches[4]);
+            } else {
+                throw new Exception("An error occurred during parsing the HDD value of '{$row['C']}'");
+            }
+            // Location
+            $serverItem->setLocation($row['D']);
+            // Price
+            if (preg_match("^(\D+)(\d+\.\d+)$", $row['E'], $matches) && count($matches) == 3) {
+                $serverItem->setPrice(floatval($matches[2]));
+                $serverItem->setCurrency($matches[1]);
+            } else {
+                throw new Exception("An error occurred during parsing the Price value of '{$row['D']}'");
+            }
+
+            $repository->add($serverItem, false);
+        }
     }
 }
