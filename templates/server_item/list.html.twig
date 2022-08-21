@@ -18,6 +18,11 @@
             {% for server_item in server_items %}
                 <tr>
                     <th scope="row">{{ server_item.getId() }}</th>
+                    <td>{{ server_item.getModel() }}</td>
+                    <td>{{ server_item.getRamConcatenated() }}</td>
+                    <td>{{ server_item.getHddConcatenated() }}</td>
+                    <td>{{ server_item.getLocation() }}</td>
+                    <td>{{ server_item.getPriceConcatenated() }}</td>
                 </tr>
             {% endfor %}
         </tbody>

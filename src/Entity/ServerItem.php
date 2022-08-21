@@ -174,4 +174,23 @@ class ServerItem
 
         return $this;
     }
+
+    public function getRamConcatenated(): ?string
+    {
+        return $this->ram . 'GB ' . $this->ramType;
+    }
+
+    public function getHddConcatenated(): ?string
+    {
+        if ($this->hddStorageCapacity / 1024 >= 1) {
+            return $this->hddCount . 'x' . $this->hddStorageCapacity/1024 . 'TB ' . $this->hddType;
+        } else {
+            return $this->hddCount . 'x' . $this->hddStorageCapacity . 'GB ' . $this->hddType;
+        }
+    }
+
+    public function getPriceConcatenated(): ?string
+    {
+        return $this->currency .$this->price;
+    }
 }
