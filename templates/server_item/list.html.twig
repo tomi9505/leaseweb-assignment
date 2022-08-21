@@ -14,5 +14,12 @@
                 <th scope="col">Price</th>
             </tr>
         </thead>
+        <tbody>
+            {% for server_item in server_items %}
+                <tr>
+                    <th scope="row">{{ server_item.getId() }}</th>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
