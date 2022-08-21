@@ -106,14 +106,14 @@ class ServerListController extends AbstractController
             // Model
             $serverItem->setModel($row['A']);
             // RAM
-            if (preg_match("^(\d+)GB(.+)$", $row['B'], $matches) && count($matches) == 3) {
+            if (preg_match('/^(\d+)GB(.+)$/', $row['B'], $matches) && count($matches) == 3) {
                 $serverItem->setRam(intval($matches[1]));
                 $serverItem->setRamType($matches[2]);
             } else {
                 throw new Exception("An error occurred during parsing the RAM value of '{$row['B']}'");
             }
             // HDD
-            if (preg_match("^(\d+)x(\d+)([GT]B)(\D*)\d?$", $row['C'], $matches) && count($matches) == 5) {
+            if (preg_match('/^(\d+)x(\d+)([GT]B)(\D*)\d?$/', $row['C'], $matches) && count($matches) == 5) {
                 $hddCapacity = intval($matches[2]);
                 if ($matches[3] == 'TB') {
                     $hddCapacity = $hddCapacity * 1024;
@@ -127,7 +127,7 @@ class ServerListController extends AbstractController
             // Location
             $serverItem->setLocation($row['D']);
             // Price
-            if (preg_match("^(\D+)(\d+\.\d+)$", $row['E'], $matches) && count($matches) == 3) {
+            if (preg_match('/^(\D+)(\d+\.\d+)$/', $row['E'], $matches) && count($matches) == 3) {
                 $serverItem->setPrice(floatval($matches[2]));
                 $serverItem->setCurrency($matches[1]);
             } else {
