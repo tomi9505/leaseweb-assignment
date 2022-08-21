@@ -2,19 +2,17 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ServerItemController extends AbstractController
+class ServerItemController extends AbstractServerItemController
+
 {
     /**
-     * @Route("/server/item", name="app_server_item")
+     * @Route("/server/item/list", name="app_server_item_list")
      */
-    public function index(): Response
+    public function list(): Response
     {
-        return $this->render('server_item/index.html.twig', [
-            'controller_name' => 'ServerItemController',
-        ]);
+        return $this->render('server_item/list.html.twig', []);
     }
 }
