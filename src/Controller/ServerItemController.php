@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ServerItem;
-use App\Repository\ServerItemRepository;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
