@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import noUiSlider from 'nouislider';
+import wNumb from 'wnumb';
 
 
 export default class extends Controller {
@@ -12,20 +13,40 @@ export default class extends Controller {
 
         let sliderStorageCapacity = document.getElementById('formFilterSliderStorageCapacity');
         let sliderStorageCapacityValues = this.sliderStorageCapacityValue;
-        let format = {
-            to: function(value) {
-                return sliderStorageCapacityValues[Math.round(value)];
+        // let format = {
+        //     to: function(value) {
+        //         return sliderStorageCapacityValues[Math.round(value)];
+        //     },
+        //     from: function (value) {
+        //         return sliderStorageCapacityValues.indexOf(Number(value));
+        //     }
+        // };
+        let format = wNumb({
+            encoder: function(value) {
+                value = sliderStorageCapacityValues[Math.round(value)];
+                if (value / 1024 >= 1) {
+                    value = value / 1024;
+                    return value.toString().concat(" TB");
+                } else {
+                    return value.toString().concat(" GB");
+                }
             },
-            from: function (value) {
+            decoder: function(value) {
+                if (value.includes("TB")) {
+                    value = value.split(" ")[0].parseInt() * 1024;
+                } else {
+                    value = value.split(" ")[0].parseInt();
+                }
                 return sliderStorageCapacityValues.indexOf(Number(value));
             }
-        };
+        });
 
         noUiSlider.create(sliderStorageCapacity, {
             start: [sliderStorageCapacityValues[0], sliderStorageCapacityValues[sliderStorageCapacityValues.length - 1]],
             range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
             step: 1,
             format: format,
+            pips: { mode: 'steps', format: format }
         });
     }
 
