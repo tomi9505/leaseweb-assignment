@@ -24,6 +24,7 @@
                         <div class="form-group">
                             <label for="formFilterSelectStorageType">Storage type:</label>
                             <select class="form-control" id="formFilterSelectStorageType">
+                                <option>None</option>
                                 {% for storageType in defaultFilterValues.storageType %}
                                     <option>{{ storageType }}</option>
                                 {% endfor %}
@@ -32,6 +33,7 @@
                         <div class="form-group">
                             <label for="formFilterSelectLocation">Storage type:</label>
                             <select class="form-control" id="formFilterSelectLocation">
+                                <option>None</option>
                                 {% for location in defaultFilterValues.location %}
                                     <option>{{ location }}</option>
                                 {% endfor %}
