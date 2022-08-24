@@ -1,6 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
 import noUiSlider from 'nouislider';
-import wNumb from 'wnumb';
 
 
 export default class extends Controller {
@@ -13,33 +12,14 @@ export default class extends Controller {
 
         let sliderStorageCapacity = document.getElementById('formFilterSliderStorageCapacity');
         let sliderStorageCapacityValues = this.sliderStorageCapacityValue;
-        // let format = {
-        //     to: function(value) {
-        //         return sliderStorageCapacityValues[Math.round(value)];
-        //     },
-        //     from: function (value) {
-        //         return sliderStorageCapacityValues.indexOf(Number(value));
-        //     }
-        // };
-        let format = wNumb({
-            encoder: function(value) {
-                if (value.toString().includes("TB")) {
-                    value = value.split(" ")[0].parseInt() * 1024;
-                } else {
-                    value = value.split(" ")[0].parseInt();
-                }
-                return sliderStorageCapacityValues.indexOf(Number(value));
+        let format = {
+            to: function(value) {
+                return sliderStorageCapacityValues[Math.round(value)];
             },
-            decoder: function(value) {
-                value = sliderStorageCapacityValues[Math.round(value)];
-                if (value / 1024 >= 1) {
-                    value = value / 1024;
-                    return value.toString().concat(" TB");
-                } else {
-                    return value.toString().concat(" GB");
-                }
+            from: function (value) {
+                return sliderStorageCapacityValues.indexOf(Number(value));
             }
-        });
+        };
 
         noUiSlider.create(sliderStorageCapacity, {
             start: ["0 GB", "72 TB"],
