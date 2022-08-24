@@ -42,7 +42,7 @@ export default class extends Controller {
         });
 
         noUiSlider.create(sliderStorageCapacity, {
-            start: [sliderStorageCapacityValues[0], sliderStorageCapacityValues[sliderStorageCapacityValues.length - 1]],
+            start: ["0 GB", "72 TB"],
             range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
             step: 1,
             format: format,
