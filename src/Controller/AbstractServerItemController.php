@@ -22,7 +22,7 @@ class AbstractServerItemController extends AbstractController
      */
     private function setAvailableLocations(ManagerRegistry $doctrine): void
     {
-        $this->filterValues['location'] = $doctrine->getRepository(ServerItem::class)->getAvailableLocations();
+        $this->filterValues['location'] = array_column($doctrine->getRepository(ServerItem::class)->getAvailableLocations(), 'location');
     }
 
     /**
