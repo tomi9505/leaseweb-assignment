@@ -5,6 +5,7 @@
         "@symfony/webpack-encore": "^3.0.0",
         "bootstrap": "^5.2.0",
         "core-js": "^3.23.0",
+        "nouislider": "^15.6.1",
         "regenerator-runtime": "^0.13.9",
         "sass": "^1.54.4",
         "sass-loader": "^13.0.0",
