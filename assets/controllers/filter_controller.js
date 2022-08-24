@@ -17,17 +17,35 @@ export default class extends Controller {
                 return sliderStorageCapacityValues[Math.round(value)];
             },
             from: function (value) {
-                return sliderStorageCapacityValues.indexOf(Number(value));
+                return sliderStorageCapacityValues.indexOf(value);
             }
         };
 
         noUiSlider.create(sliderStorageCapacity, {
-            start: ["0 GB", "72 TB"],
+            // start values are parsed by 'format'
+            start: ['1TB', '2TB'],
             range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
             step: 1,
+            tooltips: true,
             format: format,
-            pips: { mode: 'steps', format: format }
+            pips: { mode: 'steps', format: format, density: 50 },
         });
+        // let format = {
+        //     to: function(value) {
+        //         return sliderStorageCapacityValues[Math.round(value)];
+        //     },
+        //     from: function (value) {
+        //         return sliderStorageCapacityValues.indexOf(Number(value));
+        //     }
+        // };
+        //
+        // noUiSlider.create(sliderStorageCapacity, {
+        //     start: ["0", "72TB"],
+        //     range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
+        //     step: 1,
+        //     format: format,
+        //     pips: { mode: 'steps', format: format }
+        // });
     }
 
     expand(event) {
