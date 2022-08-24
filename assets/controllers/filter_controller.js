@@ -23,6 +23,14 @@ export default class extends Controller {
         // };
         let format = wNumb({
             encoder: function(value) {
+                if (value.toString().includes("TB")) {
+                    value = value.split(" ")[0].parseInt() * 1024;
+                } else {
+                    value = value.split(" ")[0].parseInt();
+                }
+                return sliderStorageCapacityValues.indexOf(Number(value));
+            },
+            decoder: function(value) {
                 value = sliderStorageCapacityValues[Math.round(value)];
                 if (value / 1024 >= 1) {
                     value = value / 1024;
@@ -30,14 +38,6 @@ export default class extends Controller {
                 } else {
                     return value.toString().concat(" GB");
                 }
-            },
-            decoder: function(value) {
-                if (value.includes("TB")) {
-                    value = value.split(" ")[0].parseInt() * 1024;
-                } else {
-                    value = value.split(" ")[0].parseInt();
-                }
-                return sliderStorageCapacityValues.indexOf(Number(value));
             }
         });
 
