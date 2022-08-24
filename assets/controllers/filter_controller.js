@@ -7,5 +7,7 @@ export default class extends Controller {
     expand(event) {
         event.preventDefault();
         console.log('Expand called');
+        let filter_section = $('.collapse');
+        filter_section.classList.contains('show') ? filter_section.classList.remove('show') : filter_section.classList.add('show');
     }
 }
