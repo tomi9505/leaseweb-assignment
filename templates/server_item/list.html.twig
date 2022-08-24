@@ -38,14 +38,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for server_item in server_items %}
+            {% for serverItem in serverItems %}
                 <tr>
-                    <th scope="row">{{ server_item.getId() }}</th>
-                    <td>{{ server_item.getModel() }}</td>
-                    <td>{{ server_item.getRamConcatenated() }}</td>
-                    <td>{{ server_item.getHddConcatenated() }}</td>
-                    <td>{{ server_item.getLocation() }}</td>
-                    <td>{{ server_item.getPriceConcatenated() }}</td>
+                    <th scope="row">{{ serverItem.getId() }}</th>
+                    <td>{{ serverItem.getModel() }}</td>
+                    <td>{{ serverItem.getRamConcatenated() }}</td>
+                    <td>{{ serverItem.getHddConcatenated() }}</td>
+                    <td>{{ serverItem.getLocation() }}</td>
+                    <td>{{ serverItem.getPriceConcatenated() }}</td>
                 </tr>
             {% endfor %}
         </tbody>

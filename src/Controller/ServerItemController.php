@@ -16,7 +16,8 @@ class ServerItemController extends AbstractServerItemController
     public function list(ManagerRegistry $doctrine): Response
     {
         return $this->render('server_item/list.html.twig', [
-            'server_items' => $this->getAllServerItems($doctrine)
+            'serverItems' => $this->getAllServerItems($doctrine),
+            'filterValues'
         ]);
     }
 
@@ -25,7 +26,6 @@ class ServerItemController extends AbstractServerItemController
      */
     public function listFilter(ManagerRegistry $doctrine, Request $request): Response
     {
-        dd([$request, $this->filterValues]); //DEBUG
         //TODO create $filters array from POST request data
         //TODO RAM should be an array instead of min and max values
         $filters = [
@@ -37,7 +37,7 @@ class ServerItemController extends AbstractServerItemController
             'location' => null
         ];
         return $this->render('server_item/list.html.twig', [
-            'server_items' => $this->getFilteredServerItems($doctrine, $filters),
+            'serverItems' => $this->getFilteredServerItems($doctrine, $filters),
             'filters' => $filters
         ]);
     }
