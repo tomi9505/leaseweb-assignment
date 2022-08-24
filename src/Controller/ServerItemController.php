@@ -25,7 +25,7 @@ class ServerItemController extends AbstractServerItemController
      */
     public function listFilter(ManagerRegistry $doctrine, Request $request): Response
     {
-        dd([$request, $this->filterValues]); //DEBUG
+        dd([$request, self::$filterValues]); //DEBUG
         //TODO create $filters array from POST request data
         //TODO RAM should be an array instead of min and max values
         $filters = [
