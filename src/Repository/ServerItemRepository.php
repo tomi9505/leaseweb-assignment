@@ -50,4 +50,40 @@ class ServerItemRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @param array $filters
+     * @return ServerItem[]
+     */
+    public function findByFilters(array $filters): array
+    {
+        $filtersQueries = [
+            'ramMin' => 's.ram >= :ramMin',
+            'ramMax' => 's.ram >= :ramMax',
+            'storageMin' => 's.hdd_count * s.hdd_storage_capacity >= :storageMin',
+            'storageMax' => 's.hdd_count * s.hdd_storage_capacity <= :storageMax',
+            'storageType' => 's.hdd_type = :storageType',
+            'location' => 's.location = :location'
+        ];
+
+        $queryBuilder = $this->createQueryBuilder('s');
+        $isFirstWhere = true;
+
+        foreach ($filters as $key => $filter) {
+            if ($isFirstWhere) {
+                if (!is_null($filter)) {
+                    $queryBuilder = $queryBuilder->where($filtersQueries[$key])
+                        ->setParameter($key, $filter);
+                }
+            } else {
+                if (!is_null($filter)) {
+                    $queryBuilder = $queryBuilder->andWhere($filtersQueries[$key])
+                        ->setParameter($key, $filter);
+                }
+            }
+            $isFirstWhere = false;
+        }
+
+        return $queryBuilder->getQuery()->execute();
+    }
 }
