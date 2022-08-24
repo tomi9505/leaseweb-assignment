@@ -86,4 +86,16 @@ class ServerItemRepository extends ServiceEntityRepository
 
         return $queryBuilder->getQuery()->execute();
     }
+
+    /**
+     * @return array
+     */
+    public function getAvailableLocations(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.location')
+            ->groupBy('s.location')
+            ->getQuery()
+            ->execute();
+    }
 }
