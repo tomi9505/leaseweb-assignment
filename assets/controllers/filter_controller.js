@@ -11,18 +11,19 @@ export default class extends Controller {
         super.connect();
 
         let sliderStorageCapacity = document.getElementById('formFilterSliderStorageCapacity');
+        let sliderStorageCapacityValues = this.sliderStorageCapacityValue;
         let format = {
             to: function(value) {
-                return this.sliderStorageCapacityValue[Math.round(value)];
+                return sliderStorageCapacityValues[Math.round(value)];
             },
             from: function (value) {
-                return this.sliderStorageCapacityValue.indexOf(Number(value));
+                return sliderStorageCapacityValues.indexOf(Number(value));
             }
         };
 
         noUiSlider.create(sliderStorageCapacity, {
-            start: [this.sliderStorageCapacityValue[0], this.sliderStorageCapacityValue[this.sliderStorageCapacityValue.length - 1]],
-            range: { min: 0, max: this.sliderStorageCapacityValue.length - 1 },
+            start: [sliderStorageCapacityValues[0], sliderStorageCapacityValues[sliderStorageCapacityValues.length - 1]],
+            range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
             step: 1,
             format: format,
         });
