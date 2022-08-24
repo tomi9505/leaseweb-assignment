@@ -22,30 +22,12 @@ export default class extends Controller {
         };
 
         noUiSlider.create(sliderStorageCapacity, {
-            // start values are parsed by 'format'
             start: [sliderStorageCapacityValues[0], sliderStorageCapacityValues[sliderStorageCapacityValues.length - 1]],
             range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
             step: 1,
-            tooltips: true,
             format: format,
             pips: { mode: 'steps', format: format, density: 50 },
         });
-        // let format = {
-        //     to: function(value) {
-        //         return sliderStorageCapacityValues[Math.round(value)];
-        //     },
-        //     from: function (value) {
-        //         return sliderStorageCapacityValues.indexOf(Number(value));
-        //     }
-        // };
-        //
-        // noUiSlider.create(sliderStorageCapacity, {
-        //     start: ["0", "72TB"],
-        //     range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
-        //     step: 1,
-        //     format: format,
-        //     pips: { mode: 'steps', format: format }
-        // });
     }
 
     expand(event) {
