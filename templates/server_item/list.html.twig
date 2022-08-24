@@ -16,8 +16,9 @@
                 <div class="card-body">
                     {# TODO add form for filtering #}
                     <form action="{{ path('app_server_item_list_filter') }}" method="post">
-                        <div class="form-group">
-                            <label class="checkbox-inline"><input type="checkbox" value="">0</label>
+                        <div class="form-group" id="formFilterRam">
+                            {% for ramValue in defaultFilterValues.ram %}
+                            <label class="checkbox-inline"><input type="checkbox" value="">{{ ramValue }} GB</label>
                         </div>
                         <button type="submit" class="btn btn-info">Filter</button>
                     </form>
