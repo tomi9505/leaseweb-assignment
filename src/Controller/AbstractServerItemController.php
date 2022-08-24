@@ -10,7 +10,7 @@ class AbstractServerItemController extends AbstractController
 
 {
     protected $defaultFilterValues = [
-        'storage' => [0, 250, 500, 1*1024, 2*1024, 3*1024, 4*1024, 8*1024, 12*1024, 24*1024, 48*1024, 72*1024],
+        'storageCapacity' => [0, 250, 500, 1*1024, 2*1024, 3*1024, 4*1024, 8*1024, 12*1024, 24*1024, 48*1024, 72*1024],
         'ram' => [2, 4, 8, 12, 16, 24, 32, 48, 64, 96],
         'storageType' => ['SAS', 'SATA', 'SSD'],
         'location' => null

@@ -3,15 +3,28 @@ import noUiSlider from 'nouislider';
 
 
 export default class extends Controller {
+    static values = {
+        sliderStorageCapacity: Array
+    }
+
     connect() {
         super.connect();
+
         let sliderStorageCapacity = document.getElementById('formFilterSliderStorageCapacity');
-        noUiSlider.create(sliderStorageCapacity, {
-            start: 1,
-            range: {
-                'min': 0,
-                'max': 8
+        let format = {
+            to: function(value) {
+                return this.sliderStorageCapacityValue[Math.round(value)];
+            },
+            from: function (value) {
+                return this.sliderStorageCapacityValue.indexOf(Number(value));
             }
+        };
+
+        noUiSlider.create(sliderStorageCapacity, {
+            start: [this.sliderStorageCapacityValue[0], this.sliderStorageCapacityValue[this.sliderStorageCapacityValue.length - 1]],
+            range: { min: 0, max: this.sliderStorageCapacityValue.length - 1 },
+            step: 1,
+            format: format,
         });
     }
 
