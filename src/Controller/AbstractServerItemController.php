@@ -20,7 +20,8 @@ class AbstractServerItemController extends AbstractController
 
     /**
      * @param ManagerRegistry $doctrine
-     * @return ServerItem[]
+     * @param array $filters
+     * @return ServerItem
      */
     protected function getFilteredServerItems(ManagerRegistry $doctrine, array $filters): array
     {
