@@ -17,7 +17,7 @@ class ServerItemController extends AbstractServerItemController
     {
         return $this->render('server_item/list.html.twig', [
             'serverItems' => $this->getAllServerItems($doctrine),
-            'filterValues'
+            'defaultFilterValues' => $this->defaultFilterValues
         ]);
     }
 
@@ -38,6 +38,7 @@ class ServerItemController extends AbstractServerItemController
         ];
         return $this->render('server_item/list.html.twig', [
             'serverItems' => $this->getFilteredServerItems($doctrine, $filters),
+            'defaultFilterValues' => $this->defaultFilterValues,
             'filters' => $filters
         ]);
     }
