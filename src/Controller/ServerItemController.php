@@ -27,14 +27,22 @@ class ServerItemController extends AbstractServerItemController
     public function listFilter(ManagerRegistry $doctrine, Request $request): Response
     {
         //TODO create $filters array from POST request data
+        $receivedFilterValues = $request->request->all();
+        $ramValues = [];
+        foreach ($this->defaultFilterValues['storageCapacity'] as $storageCapacity) {
+            if (array_key_exists('ramCapacity' . $storageCapacity, $receivedFilterValues)) {
+                $ramValues[] = $storageCapacity;
+            }
+        }
+
+
         //TODO RAM should be an array instead of min and max values
         $filters = [
-            'storageMin' => null,
-            'storageMax' => null,
-            'storageType' => null,
-            'ramMin' => null,
-            'ramMax' => null,
-            'location' => null
+            'storageMin' => $receivedFilterValues['storageCapacityMin'],
+            'storageMax' => $receivedFilterValues['storageCapacityMax'],
+            'storageType' => $receivedFilterValues['formFilterSelectStorageType'] == 'None' ? null : $receivedFilterValues['formFilterSelectStorageType'],
+            'ramValues' => count($ramValues) == 0 ? null : $ramValues,
+            'location' => $receivedFilterValues['formFilterSelectLocation'] == 'None' ? null : $receivedFilterValues['formFilterSelectLocation']
         ];
         return $this->render('server_item/list.html.twig', [
             'serverItems' => $this->getFilteredServerItems($doctrine, $filters),

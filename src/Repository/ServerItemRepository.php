@@ -58,8 +58,7 @@ class ServerItemRepository extends ServiceEntityRepository
     public function findByFilters(array $filters): array
     {
         $filtersQueries = [
-            'ramMin' => 's.ram >= :ramMin',
-            'ramMax' => 's.ram >= :ramMax',
+            'ramValues' => 's.ram in(:ramValues)',
             'storageMin' => 's.hdd_count * s.hdd_storage_capacity >= :storageMin',
             'storageMax' => 's.hdd_count * s.hdd_storage_capacity <= :storageMax',
             'storageType' => 's.hdd_type = :storageType',
