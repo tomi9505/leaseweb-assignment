@@ -26,7 +26,6 @@ class ServerItemController extends AbstractServerItemController
      */
     public function listFilter(ManagerRegistry $doctrine, Request $request): Response
     {
-        //TODO create $filters array from POST request data
         $receivedFilterValues = $request->request->all();
         $ramValues = [];
         foreach ($this->defaultFilterValues['storageCapacity'] as $storageCapacity) {
@@ -35,8 +34,6 @@ class ServerItemController extends AbstractServerItemController
             }
         }
 
-
-        //TODO RAM should be an array instead of min and max values
         $filters = [
             'storageMin' => $receivedFilterValues['storageCapacityMin'],
             'storageMax' => $receivedFilterValues['storageCapacityMax'],
