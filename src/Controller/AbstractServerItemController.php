@@ -39,22 +39,11 @@ class AbstractServerItemController extends AbstractController
     /**
      * @param ManagerRegistry $doctrine
      * @param array $filters
-     * @return ServerItem
+     * @return ServerItem[]
      */
     protected function getFilteredServerItems(ManagerRegistry $doctrine, array $filters): array
     {
         $this->setAvailableLocations($doctrine);
-        if (!is_null($filters['ramValues'])) {
-            $ramValuesConverted = [];
-            foreach ($filters['ramValues'] as $ramValue) {
-                if (str_ends_with($ramValue, 'TB')) {
-                    $ramValuesConverted[] = intval(substr($ramValue, 0, strlen($ramValue) -2)) * 1024;
-                } else {
-                    $ramValuesConverted[] = intval(substr($ramValue, 0, strlen($ramValue) -2));
-                }
-            }
-            $filters['ramValues'] = $ramValuesConverted;
-        }
         return $doctrine->getRepository(ServerItem::class)->findByFilters($filters);
     }
 }

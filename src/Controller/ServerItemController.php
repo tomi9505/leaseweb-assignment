@@ -28,15 +28,15 @@ class ServerItemController extends AbstractServerItemController
     {
         $receivedFilterValues = $request->request->all();
         $ramValues = [];
-        foreach ($this->defaultFilterValues['storageCapacity'] as $storageCapacity) {
-            if (array_key_exists('ramCapacity' . $storageCapacity, $receivedFilterValues)) {
-                $ramValues[] = $storageCapacity;
+        foreach ($this->defaultFilterValues['ram'] as $ram) {
+            if (array_key_exists('ramCapacity' . $ram . 'GB', $receivedFilterValues)) {
+                $ramValues[] = $ram;
             }
         }
 
         $filters = [
-            'storageMin' => $receivedFilterValues['storageCapacityMin'],
-            'storageMax' => $receivedFilterValues['storageCapacityMax'],
+            'storageMin' => convertStorageCapacity($receivedFilterValues['storageCapacityMin']),
+            'storageMax' => convertStorageCapacity($receivedFilterValues['storageCapacityMax']),
             'storageType' => $receivedFilterValues['formFilterSelectStorageType'] == 'None' ? null : $receivedFilterValues['formFilterSelectStorageType'],
             'ramValues' => count($ramValues) == 0 ? null : $ramValues,
             'location' => $receivedFilterValues['formFilterSelectLocation'] == 'None' ? null : $receivedFilterValues['formFilterSelectLocation']
@@ -46,5 +46,19 @@ class ServerItemController extends AbstractServerItemController
             'defaultFilterValues' => $this->defaultFilterValues,
             'filters' => $filters
         ]);
+    }
+
+    /**
+     * @param $storageCapacity
+     * @return int
+     */
+    private function convertStorageCapacity($storageCapacity): int
+    {
+
+        if (str_ends_with($storageCapacity, 'TB')) {
+            return intval(substr($storageCapacity, 0, strlen($storageCapacity) -2)) * 1024;
+        } else {
+            return intval(substr($storageCapacity, 0, strlen($storageCapacity) -2));
+        }
     }
 }
