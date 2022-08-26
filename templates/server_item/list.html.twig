@@ -29,29 +29,6 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                            <div class="row mb-5">
-                                <div class="col-sm-2">
-                                    Storage capacity
-                                </div>
-                                <div class="form-group col-sm-10">
-                                    <div id="formFilterSliderStorageCapacity"></div>
-                                </div>
-                            </div>
-                            <input type="hidden" id="storageCapacityMin" name="storageCapacityMin" value="">
-                            <input type="hidden" id="storageCapacityMax" name="storageCapacityMax" value="">
-                            <div class="row mb-2">
-                                <div class="col-sm-2">
-                                    Storage type
-                                </div>
-                                <div class="form-group col-sm-10">
-                                    <select class="form-control" id="formFilterSelectStorageType" name="formFilterSelectStorageType">
-                                        <option>None</option>
-                                        {% for storageType in defaultFilterValues.storageType %}
-                                            <option>{{ storageType }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-sm-2">
                                     Location
@@ -65,6 +42,29 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-2">
+                                    Storage type
+                                </div>
+                                <div class="form-group col-sm-10">
+                                    <select class="form-control" id="formFilterSelectStorageType" name="formFilterSelectStorageType">
+                                        <option>None</option>
+                                        {% for storageType in defaultFilterValues.storageType %}
+                                            <option>{{ storageType }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-5">
+                                <div class="col-sm-2">
+                                    Storage capacity
+                                </div>
+                                <div class="form-group col-sm-10">
+                                    <div id="formFilterSliderStorageCapacity"></div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="storageCapacityMin" name="storageCapacityMin" value="">
+                            <input type="hidden" id="storageCapacityMax" name="storageCapacityMax" value="">
                         </div>
                         <button type="submit" class="btn btn-info" {{ stimulus_action('filter', 'submit') }}>Filter</button>
                     </form>
