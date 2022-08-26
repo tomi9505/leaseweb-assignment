@@ -37,5 +37,8 @@ export default class extends Controller {
 
     submit() {
         let sliderStorageCapacity = document.getElementById('formFilterSliderStorageCapacity');
+        let sliderValues = sliderStorageCapacity.noUiSlider.get();
+        document.getElementById('storageCapacityMin').value = sliderValues[0];
+        document.getElementById('storageCapacityMax').value = sliderValues[1];
     }
 }
