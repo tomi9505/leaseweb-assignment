@@ -18,18 +18,18 @@
                 <div class="card-body">
                     {# TODO add form for filtering #}
                     <form action="{{ path('app_server_item_list_filter') }}" method="post">
-                        <div class="container">
-                            <div class="row">
+                        <div class="container-fluid">
+                            <div class="row mb-2">
                                 <div class="col-sm-2">
                                     RAM size
                                 </div>
                                 <div class="form-group col-sm-10" id="formFilterRam">
                                     {% for ramValue in defaultFilterValues.ram %}
-                                        <label class="checkbox-inline"><input type="checkbox" value="">{{ ramValue }} GB</label>
+                                        <label class="checkbox-inline"><input type="checkbox" value=""> {{ ramValue }}GB </label>
                                     {% endfor %}
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-5">
                                 <div class="col-sm-2">
                                     Storage capacity
                                 </div>
@@ -37,7 +37,7 @@
                                     <div id="formFilterSliderStorageCapacity"></div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-2">
                                 <div class="col-sm-2">
                                     Storage type
                                 </div>
