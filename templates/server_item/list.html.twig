@@ -37,8 +37,8 @@
                                     <div id="formFilterSliderStorageCapacity"></div>
                                 </div>
                             </div>
-                            <input type="hidden" name="storageCapacityMin" value="">
-                            <input type="hidden" name="storageCapacityMax" value="">
+                            <input type="hidden" id="storageCapacityMin" name="storageCapacityMin" value="">
+                            <input type="hidden" id="storageCapacityMax" name="storageCapacityMax" value="">
                             <div class="row mb-2">
                                 <div class="col-sm-2">
                                     Storage type
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-info">Filter</button>
+                        <button type="submit" class="btn btn-info" {{ stimulus_action('filter', 'submit') }}>Filter</button>
                     </form>
                 </div>
             </div>
