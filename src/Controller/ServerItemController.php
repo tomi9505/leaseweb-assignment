@@ -35,8 +35,8 @@ class ServerItemController extends AbstractServerItemController
         }
 
         $filters = [
-            'storageMin' => convertStorageCapacity($receivedFilterValues['storageCapacityMin']),
-            'storageMax' => convertStorageCapacity($receivedFilterValues['storageCapacityMax']),
+            'storageMin' => $this->convertStorageCapacity($receivedFilterValues['storageCapacityMin']),
+            'storageMax' => $this->convertStorageCapacity($receivedFilterValues['storageCapacityMax']),
             'storageType' => $receivedFilterValues['formFilterSelectStorageType'] == 'None' ? null : $receivedFilterValues['formFilterSelectStorageType'],
             'ramValues' => count($ramValues) == 0 ? null : $ramValues,
             'location' => $receivedFilterValues['formFilterSelectLocation'] == 'None' ? null : $receivedFilterValues['formFilterSelectLocation']
