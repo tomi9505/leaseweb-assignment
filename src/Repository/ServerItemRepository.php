@@ -59,9 +59,9 @@ class ServerItemRepository extends ServiceEntityRepository
     {
         $filtersQueries = [
             'ramValues' => 's.ram in(:ramValues)',
-            'storageMin' => 's.hdd_count * s.hdd_storage_capacity >= :storageMin',
-            'storageMax' => 's.hdd_count * s.hdd_storage_capacity <= :storageMax',
-            'storageType' => 's.hdd_type = :storageType',
+            'storageMin' => 's.hddCount * s.hddStorageCapacity >= :storageMin',
+            'storageMax' => 's.hddCount * s.hddStorageCapacity <= :storageMax',
+            'storageType' => 's.hddType = :storageType',
             'location' => 's.location = :location'
         ];
 
