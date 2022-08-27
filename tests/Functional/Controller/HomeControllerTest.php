@@ -11,11 +11,23 @@ class HomeControllerTest extends PantherTestCase
     public function setUp(): void
     {
         $this->client = static::createPantherClient();
+        $this->client->request('GET', '/');
     }
 
-    public function testSmokeTest(): void
+    public function testCheckTitle(): void
     {
-        $this->client->request('GET', '/');
-        $this->assertResponseIsSuccessful();
+        $this->assertPageTitleSame('Server Information List');
+    }
+
+    public function testCheckHeader(): void
+    {
+        $this->assertSelectorTextContains('header', 'Server Information List application');
+    }
+
+    public function testCheckBody(): void
+    {
+        $this->assertSelectorTextContains('main', 'Server Information List application');
+        $this->assertSelectorTextContains('main', 'List servers');
+        $this->assertSelectorTextContains('main', 'Upload data');
     }
 }
