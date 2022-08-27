@@ -19,7 +19,7 @@ class AbstractServerItemControllerTest extends TestCase
         parent::setUp();
         $this->repository = $this->createMock(ServerItemRepository::class);
         $this->doctrine = $this->createMock(ManagerRegistry::class);
-        $this->repository->expects($this->any())
+        $this->doctrine->expects($this->any())
             ->method('getRepository')
             ->willReturn($this->repository);
         $this->controller = new AbstractServerItemController();
