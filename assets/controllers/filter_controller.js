@@ -39,6 +39,7 @@ export default class extends Controller {
             step: 1,
             format: format,
             pips: { mode: 'steps', format: format, density: 50 },
+            connect: true
         });
     }
 
