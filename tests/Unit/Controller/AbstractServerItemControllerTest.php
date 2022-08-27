@@ -65,6 +65,9 @@ class AbstractServerItemControllerTest extends TestCase
         }
 
         // Then: the response is an empty array
-        $this->assertCount(0, $result);
+        $this->assertCount(count($serverItems), $result);
+        foreach ($result as $actualServerItem) {
+            $this->assertContains($actualServerItem, $serverItems);
+        }
     }
 }
