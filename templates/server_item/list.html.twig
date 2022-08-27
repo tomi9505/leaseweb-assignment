@@ -40,7 +40,11 @@
                                     <select class="form-control" id="formFilterSelectLocation" name="formFilterSelectLocation">
                                         <option>None</option>
                                         {% for location in defaultFilterValues.location %}
-                                            <option>{{ location }}</option>
+                                            {% if filters and filters.ramValues and location == filters.location %}
+                                                <option selected>{{ location }}</option>
+                                            {% else %}
+                                                <option>{{ location }}</option>
+                                            {% endif %}
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -53,7 +57,11 @@
                                     <select class="form-control" id="formFilterSelectStorageType" name="formFilterSelectStorageType">
                                         <option>None</option>
                                         {% for storageType in defaultFilterValues.storageType %}
-                                            <option>{{ storageType }}</option>
+                                            {% if filters and filters.ramValues and storageType == filters.storageType %}
+                                                <option selected>{{ storageType }}</option>
+                                            {% else %}
+                                                <option>{{ storageType }}</option>
+                                            {% endif %}
                                         {% endfor %}
                                     </select>
                                 </div>
