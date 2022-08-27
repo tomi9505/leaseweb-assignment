@@ -19,7 +19,7 @@ class AbstractServerItemControllerTest extends TestCase
         $this->controller = new AbstractServerItemController();
     }
 
-    public function getAllServerItemsEmpty() {
+    public function testGetAllServerItemsEmpty() {
         // Given: there are no server items in the database
         $this->doctrine
             ->expects($this->any())
