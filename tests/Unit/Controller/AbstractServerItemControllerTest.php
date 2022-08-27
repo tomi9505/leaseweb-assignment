@@ -70,4 +70,37 @@ class AbstractServerItemControllerTest extends TestCase
             $this->assertContains($actualServerItem, $serverItems);
         }
     }
+
+    public function testFilteredServerItems() {
+        // Given: there are server items in the database and the filters are empty
+        $serverItems = [
+            new ServerItem(),
+            new ServerItem()
+        ];
+        $filters = [
+            'ramValues' => null,
+            'storageMin' => null,
+            'storageMax' => null,
+            'storageType' => null,
+            'location' => null
+        ];
+
+        $this->repository
+            ->expects($this->any())
+            ->method('findByFilters')
+            ->willReturn($serverItems);
+
+        // When: I query all server items
+        try {
+            $result = TestUtil::callMethod($this->controller, 'getFilteredServerItems', [$this->doctrine, $filters]);
+        } catch (\ReflectionException $e) {
+            $this->fail('Failed to call method \'getAllServerItems\' under test');
+        }
+
+        // Then: the response is an empty array
+        $this->assertCount(count($serverItems), $result);
+        foreach ($result as $actualServerItem) {
+            $this->assertContains($actualServerItem, $serverItems);
+        }
+    }
 }
