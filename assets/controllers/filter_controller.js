@@ -1,6 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
 import noUiSlider from 'nouislider';
-import {raw} from "@symfony/webpack-encore/lib/webpack/copy-files-loader";
 
 
 export default class extends Controller {
