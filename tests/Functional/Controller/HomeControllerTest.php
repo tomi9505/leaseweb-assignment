@@ -6,11 +6,16 @@ use Symfony\Component\Panther\PantherTestCase;
 
 class HomeControllerTest extends PantherTestCase
 {
-    public function testSomething(): void
-    {
-        $client = static::createPantherClient();
-        $crawler = $client->request('GET', '/');
+    private $client;
 
-        $this->assertSelectorTextContains('h1', 'Hello World');
+    public function setUp(): void
+    {
+        $this->client = static::createPantherClient();
+    }
+
+    public function testSmokeTest(): void
+    {
+        $this->client->request('GET', '/');
+        $this->assertResponseIsSuccessful();
     }
 }
