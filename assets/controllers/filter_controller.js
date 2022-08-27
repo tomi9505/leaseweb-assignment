@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import noUiSlider from 'nouislider';
+import {raw} from "@symfony/webpack-encore/lib/webpack/copy-files-loader";
 
 
 export default class extends Controller {
@@ -22,19 +23,19 @@ export default class extends Controller {
                 return sliderStorageCapacityValues.indexOf(value);
             }
         };
-        if (this.storageMin && this.storageMax) {
-            if (this.storageMax / 1024 >= 1) {
-                let sliderStartMaxValue = this.storageMax / 1024;
-                let sliderStartValues = [this.storageMin, sliderStartMaxValue.toString().concat("TB")];
-            } else {
-                let sliderStartValues = [this.storageMin, this.storageMax.toString().concat("GB")];
-            }
-        } else {
-            let sliderStartValues = [sliderStorageCapacityValues[0], sliderStorageCapacityValues[sliderStorageCapacityValues.length - 1]]
+        let sliderStartMinValue = sliderStorageCapacityValues[0];
+        let sliderStartMaxValue = sliderStorageCapacityValues[sliderStorageCapacityValues.length - 1];
+
+        // Set the start values to the previous ones if they exist
+        if (this.storageMinValue) {
+            sliderStartMinValue = this._formatSliderValue(this.storageMinValue);
+        }
+        if (this.storageMaxValue) {
+            sliderStartMaxValue = this._formatSliderValue(this.storageMaxValue);
         }
 
         noUiSlider.create(sliderStorageCapacity, {
-            start: sliderStartValues,
+            start: [sliderStartMinValue, sliderStartMaxValue],
             range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
             step: 1,
             format: format,
@@ -52,5 +53,18 @@ export default class extends Controller {
         let sliderValues = sliderStorageCapacity.noUiSlider.get();
         document.getElementById('storageCapacityMin').value = sliderValues[0];
         document.getElementById('storageCapacityMax').value = sliderValues[1];
+    }
+
+    _formatSliderValue(rawValue) {
+        if (rawValue) {
+            if (rawValue === 0) {
+                return rawValue;
+            } else if (rawValue / 1024 >= 1) {
+                return (rawValue / 1024).toString().concat('TB');
+            } else {
+                return rawValue.toString().concat('GB');
+            }
+        }
+        return rawValue;
     }
 }
