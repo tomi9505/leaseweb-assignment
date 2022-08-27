@@ -16,7 +16,6 @@
             </div>
             <div id="collapseFilter" class="collapse" aria-labelledby="headingFilter" data-parent="#accordion">
                 <div class="card-body">
-                    {# TODO add form for filtering #}
                     <form action="{{ path('app_server_item_list_filter') }}" method="post">
                         <div class="container-fluid">
                             <div class="row mb-2">
@@ -25,7 +24,11 @@
                                 </div>
                                 <div class="form-group col-sm-10" id="formFilterRam">
                                     {% for ramValue in defaultFilterValues.ram %}
-                                        <label class="checkbox-inline"><input type="checkbox" name="ramCapacity{{ ramValue }}" value="true"> {{ ramValue }}GB </label>
+                                        {% if filters and filters.ramValues and filters.ramValues.includes(ramValue) %}
+                                            <label class="checkbox-inline"><input type="checkbox" name="ramCapacity{{ ramValue }}" value="true" checked> {{ ramValue }}GB </label>
+                                        {% else %}
+                                            <label class="checkbox-inline"><input type="checkbox" name="ramCapacity{{ ramValue }}" value="true"> {{ ramValue }}GB </label>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>

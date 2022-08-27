@@ -17,7 +17,8 @@ class ServerItemController extends AbstractServerItemController
     {
         return $this->render('server_item/list.html.twig', [
             'serverItems' => $this->getAllServerItems($doctrine),
-            'defaultFilterValues' => $this->defaultFilterValues
+            'defaultFilterValues' => $this->defaultFilterValues,
+            'filters' => null
         ]);
     }
 
