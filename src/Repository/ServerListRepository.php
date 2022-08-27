@@ -6,7 +6,6 @@ use App\Entity\ServerList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
-use function Webmozart\Assert\Tests\StaticAnalysis\length;
 
 /**
  * @extends ServiceEntityRepository<ServerList>
@@ -58,29 +57,4 @@ class ServerListRepository extends ServiceEntityRepository
             throw new NoResultException('No uploaded file found');
         }
     }
-
-//    /**
-//     * @return ServerList[] Returns an array of ServerList objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?ServerList
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
