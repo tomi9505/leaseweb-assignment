@@ -30,7 +30,7 @@ class ServerItemController extends AbstractServerItemController
         $receivedFilterValues = $request->request->all();
         $ramValues = [];
         foreach ($this->defaultFilterValues['ram'] as $ram) {
-            if (array_key_exists('ramCapacity' . $ram . 'GB', $receivedFilterValues)) {
+            if (array_key_exists('ramCapacity' . $ram, $receivedFilterValues)) {
                 $ramValues[] = $ram;
             }
         }
