@@ -27,7 +27,8 @@ class AbstractServerItemControllerTest extends TestCase
         $this->controller = new AbstractServerItemController();
     }
 
-    public function testGetAllServerItemsEmpty() {
+    public function testGetAllServerItemsEmpty(): void
+    {
         // Given: there are no server items in the database
         $this->repository
             ->expects($this->any())
@@ -45,7 +46,8 @@ class AbstractServerItemControllerTest extends TestCase
         $this->assertCount(0, $result);
     }
 
-    public function testGetAllServerItemsSuccess() {
+    public function testGetAllServerItemsSuccess(): void
+    {
         // Given: there are server items in the database
         $serverItems = [
             new ServerItem(),
@@ -71,7 +73,8 @@ class AbstractServerItemControllerTest extends TestCase
         }
     }
 
-    public function testFilteredServerItems() {
+    public function testFilteredServerItems(): void
+    {
         // Given: there are server items in the database and the filters are empty
         $serverItems = [
             new ServerItem(),
