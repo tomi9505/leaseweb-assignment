@@ -4,7 +4,9 @@ import noUiSlider from 'nouislider';
 
 export default class extends Controller {
     static values = {
-        sliderStorageCapacity: Array
+        sliderStorageCapacity: Array,
+        storageMin: Number,
+        storageMax: Number
     }
 
     connect() {
@@ -20,9 +22,19 @@ export default class extends Controller {
                 return sliderStorageCapacityValues.indexOf(value);
             }
         };
+        if (this.storageMin && this.storageMax) {
+            if (this.storageMax / 1024 >= 1) {
+                let sliderStartMaxValue = this.storageMax / 1024;
+                let sliderStartValues = [this.storageMin, sliderStartMaxValue.toString().concat("TB")];
+            } else {
+                let sliderStartValues = [this.storageMin, this.storageMax.toString().concat("GB")];
+            }
+        } else {
+            let sliderStartValues = [sliderStorageCapacityValues[0], sliderStorageCapacityValues[sliderStorageCapacityValues.length - 1]]
+        }
 
         noUiSlider.create(sliderStorageCapacity, {
-            start: [sliderStorageCapacityValues[0], sliderStorageCapacityValues[sliderStorageCapacityValues.length - 1]],
+            start: sliderStartValues,
             range: { min: 0, max: sliderStorageCapacityValues.length - 1 },
             step: 1,
             format: format,

@@ -5,7 +5,9 @@
 
     <div id="accordion">
         <div class="card" {{ stimulus_controller('filter', {
-            sliderStorageCapacity: defaultFilterValues.storageCapacity
+            sliderStorageCapacity: defaultFilterValues.storageCapacity,
+            storageMin: filters ? filters.storageMin : null,
+            storageMax: filters ? filters.storageMax : null
         }) }}>
             <div class="card-header" id="headingFilter">
                 <h5 class="mb-0">
